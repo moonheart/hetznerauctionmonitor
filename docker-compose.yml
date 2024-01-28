@@ -1,0 +1,8 @@
+﻿services:
+  hetznerauctionmonitor:
+    image: moonheartmoon/hetznerauctionmonitor
+    container_name: hetznerauctionmonitor
+    restart: unless-stopped
+    volumes:
+      - ${PWD}/appsettings.user.json:/app/appsettings.user.json:rw
+      - ./data/:/app/data/:rw
