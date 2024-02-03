@@ -3,17 +3,18 @@ USER $APP_UID
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG TARGETARCH
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HetznerAuctionMonitor/HetznerAuctionMonitor.csproj", "HetznerAuctionMonitor/"]
-RUN dotnet restore "HetznerAuctionMonitor/HetznerAuctionMonitor.csproj"
+RUN dotnet restore "HetznerAuctionMonitor/HetznerAuctionMonitor.csproj" -a $TARGETARCH
 COPY . .
 WORKDIR "/src/HetznerAuctionMonitor"
-RUN dotnet build "HetznerAuctionMonitor.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "HetznerAuctionMonitor.csproj" -c $BUILD_CONFIGURATION -o /app/build -a $TARGETARCH
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "HetznerAuctionMonitor.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HetznerAuctionMonitor.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false -a $TARGETARCH
 
 FROM base AS final
 WORKDIR /app
