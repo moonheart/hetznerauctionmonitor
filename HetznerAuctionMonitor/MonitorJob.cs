@@ -48,7 +48,7 @@ public partial class MonitorJob : IJob
                 if (findById == null)
                 {
                     // new server
-                    // await _monitorBot.NewServer(server);
+                    await _monitorBot.NewServer(server);
                     col.Insert(server);
                 }
                 else
