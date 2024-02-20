@@ -87,7 +87,7 @@ public partial class MonitorBot
 
     public async Task UpdateServerStats(Server[] servers)
     {
-        var maxCpu = servers.Max(s => s.cpu.Length);
+        var maxCpu = servers.Max(s => s.cpu.Replace("AMD ", "").Replace("Intel ", "").Length);
         var tableHeader = $"""
                            ```
                            |{"cpu".PadRight(maxCpu)}|cnt |price  |score |rank |
