@@ -38,7 +38,7 @@ public partial class MonitorBot
         var msg = $"""
                    🆕 New server found:
                    ID: `{server.id}`
-                   CPU: {Escape(server.cpu)}
+                   CPU: `{Escape(server.cpu)}`
                    RAM: {server.ram_size} GB
                    Price: {(server.fixed_price ? "🔒 " : "")}€{server.price} monthly
                    Expires: {FormatTime(server.next_reduce)} left
@@ -64,7 +64,7 @@ public partial class MonitorBot
             var msg = $"""
                        📉 Server price changed:
                        ID: `{newServer.id}`
-                       CPU: {Escape(newServer.cpu)}
+                       CPU: `{Escape(newServer.cpu)}`
                        RAM: {newServer.ram_size} GB
                        Price: {oldServer.price} \=\> {(newServer.fixed_price ? "🔒" : "")}€{newServer.price} monthly
                        Expires: {FormatTime(newServer.next_reduce)} left
@@ -107,7 +107,7 @@ public partial class MonitorBot
                      var rank = score / minPrice;
                      return new
                      {
-                         cpu = grouping.Key,
+                         cpu = grouping.Key.Replace("AMD ", "").Replace("Intel ", ""),
                          count = grouping.Count(),
                          price = priceStr,
                          score,
